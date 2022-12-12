@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import axios from "axios"
-import { FaTrash, FaEdit } from "react-icons/fa"
+import axios from "axios";
+import { FaTrash, FaEdit } from "react-icons/fa";
+import { toast } from "react-toastify";
+import "../styles/style.css";
 
 const Table = styled.table`
   width: 100%;
@@ -38,7 +40,24 @@ export const Td = styled.td`
   }
 `;
 
-const Grid = ({livros}) => {
+const Grid = ({ livros, setLivros, setOnEdit }) => {
+  const handleEdit = (item) => {
+    setOnEdit(item);
+  };
+
+  const handleDelete = async (id_livro) => {
+    await axios
+      .delete("http://localhost:3030/api/livro/" + id_livro)
+      .then(({ data }) => {
+        const newArray = livros.filter((livro) => livro.id_livro !== id_livro);
+
+        setLivros(newArray);
+        toast.success(data);
+      })
+      .catch(({ data }) => toast.error(data));
+
+    setOnEdit(null);
+  };
   return (
     <Table>
       <Thead>
@@ -46,28 +65,34 @@ const Grid = ({livros}) => {
           <Th>Nome Livro</Th>
           <Th>Editora</Th>
           <Th>Ano Publicação</Th>
+          <Th>Id do Autor</Th>
         </Tr>
       </Thead>
       <Tbody>
-      {livros.map((livro, i) => (
+        {livros.map((livro, i) => (
           <Tr key={i}>
             <Td width="30%">{livro.nome_livro}</Td>
-            <Td width="30%">{livro.editora}</Td>
-            <Td width="20%" onlyWeb>
+            <Td width="20%">{livro.editora}</Td>
+            <Td width="30%" onlyWeb>
               {livro.ano_publicacao}
             </Td>
-            <Td alignCenter width="5%">
-              <FaEdit />
+            <Td width="20%" onlyWeb>
+              {livro.id_autor}
             </Td>
             <Td alignCenter width="5%">
-              <FaTrash />
+              <FaEdit className="botaoEdit" onClick={() => handleEdit(livro)} />
+            </Td>
+            <Td alignCenter width="5%">
+              <FaTrash
+                className="botaoTrash"
+                onClick={() => handleDelete(livro.id_livro)}
+              />
             </Td>
           </Tr>
         ))}
       </Tbody>
     </Table>
   );
-
-}
+};
 
 export default Grid;
