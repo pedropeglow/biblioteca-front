@@ -40,7 +40,7 @@ function App() {
   return (
     <>
       <Container>
-        <Title>Livros</Title>
+        <Title>Livros 📚</Title>
         <Form
           onEdit={onEdit}
           setLivros={setLivros}
@@ -48,7 +48,7 @@ function App() {
           getLivros={getLivros}
         />
         <Grid livros={livros} setLivros={setLivros} setOnEdit={setOnEdit} />
-        <Title>Autores</Title>
+        <Title>Autores ✍️</Title>
         <GridAutores />
       </Container>
       <ToastContainer autoClose={3000} position={toast.POSITION.BOTTOM_LEFT} />

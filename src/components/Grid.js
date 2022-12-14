@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "../styles/style.css";
+import moment from "moment";
 
 const Table = styled.table`
   width: 100%;
@@ -50,7 +51,6 @@ const Grid = ({ livros, setLivros, setOnEdit }) => {
       .delete("http://localhost:3030/api/livro/" + id_livro)
       .then(({ data }) => {
         const newArray = livros.filter((livro) => livro.id_livro !== id_livro);
-
         setLivros(newArray);
         toast.success(data);
       })
@@ -74,16 +74,16 @@ const Grid = ({ livros, setLivros, setOnEdit }) => {
             <Td width="30%">{livro.nome_livro}</Td>
             <Td width="20%">{livro.editora}</Td>
             <Td width="30%" onlyWeb>
-              {livro.ano_publicacao}
+              {moment(livro.anoPublicacao).format('L')}
             </Td>
             <Td width="20%" onlyWeb>
               {livro.id_autor}
             </Td>
             <Td alignCenter width="5%">
-              <FaEdit className="botaoEdit" onClick={() => handleEdit(livro)} />
+              <FaRegEdit className="botaoEdit" onClick={() => handleEdit(livro)} />
             </Td>
             <Td alignCenter width="5%">
-              <FaTrash
+              <FaTrashAlt
                 className="botaoTrash"
                 onClick={() => handleDelete(livro.id_livro)}
               />

@@ -6,9 +6,9 @@ import { toast } from "react-toastify";
 const FormContainer = styled.form`
   display: flex;
   align-items: flex-end;
-  gap: 10px;
+  gap: 20px;
   flex-wrap: wrap;
-  background-color: #fff;
+  background-color: #3B70A2;
   padding: 20px;
   box-shadow: 0px 0px 5px #ccc;
   border-radius: 5px;
@@ -19,16 +19,21 @@ const InputArea = styled.div`
   flex-direction: column;
 `;
 
-const Label = styled.label``;
+const Label = styled.label`
+  color: #fff
+`;
 
 const Button = styled.button`
   padding: 10px;
   cursor: pointer;
   border-radius: 5px;
   border: none;
-  background-color: #2c73d2;
-  color: white;
+  background-color: ##70C2E8;
+  color: black;
   height: 42px;
+  &:hover {
+    background-color: lightblue;
+  }
 `;
 
 const Input = styled.input`
